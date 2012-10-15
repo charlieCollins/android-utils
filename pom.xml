@@ -10,11 +10,10 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>android</groupId>
+			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
-			<version>8</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/android.jar</systemPath>
+			<version>2.2.1</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -26,6 +25,7 @@
 	</dependencies>
 	<build>
 		<plugins>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -35,6 +35,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -42,44 +43,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			<plugin>
-				<!-- NOTE: We don't need a groupId specification because the group is 
-					org.apache.maven.plugins ...which is assumed by default. -->
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptors>
-						<descriptor>src/main/assembly/assembly.xml</descriptor>
-					</descriptors>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<excludePackageNames>*internal*</excludePackageNames>
-					<javadocDirectory>${basedir}/src/main/javadoc</javadocDirectory>
-					<docfilessubdirs>true</docfilessubdirs>
-					<stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
-					<!-- <stylesheet>maven</stylesheet> -->
-					<show>public</show>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<systemProperties>
-						<property>
-							<name>java.util.logging.config.file</name>
-							<value>logging.properties</value>
-						</property>
-					</systemProperties>
-					<excludes>
-						<exclude>**/oldtest/*.java</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -87,6 +51,7 @@
 					<useProjectReferences>false</useProjectReferences>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 </project>
