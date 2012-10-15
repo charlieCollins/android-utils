@@ -197,6 +197,7 @@ public final class FileUtil {
                while ((line = in.readLine()) != null) {
                   sb.append(line + System.getProperty("line.separator"));
                }
+               in.close();
             }
          }
       } catch (IOException e) {
