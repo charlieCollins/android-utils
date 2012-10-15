@@ -1,1 +1,20 @@
+<<<<<<< HEAD
 /target
+=======
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+>>>>>>> c59b5b75cd6edaf123a134c4a89fd1104857b616
