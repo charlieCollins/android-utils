@@ -90,8 +90,7 @@ public final class FileUtil {
       }
       return dir;
    }
-
-   /**
+/**
     * Copy file, return true on success, false on failure.
     * 
     * @param src
@@ -109,7 +108,7 @@ public final class FileUtil {
             inChannel.transferTo(0, inChannel.size(), outChannel);
             result = true;
          } catch (IOException e) {
-
+            Log.e(AllSnowApplication.TAG, "Error creating channels:" + e.getMessage(), e);
          } finally {
             if ((inChannel != null) && inChannel.isOpen()) {
                try {
@@ -131,7 +130,7 @@ public final class FileUtil {
    }
 
    /**
-    * Replace entire File with contents of String, return true on success, false on failure.
+    * Replace entire File contents with String, return true on success, false on failure.
     * 
     * @param fileContents
     * @param file
@@ -139,73 +138,57 @@ public final class FileUtil {
     */
    public static boolean writeStringAsFile(final String fileContents, final File file) {
       boolean result = false;
+      Writer out = null;
       try {
          synchronized (FileUtil.DATA_LOCK) {
             if (file != null) {
                file.createNewFile(); // ok if returns false, overwrite
-               Writer out = new BufferedWriter(new FileWriter(file), 1024);
+               out = new BufferedWriter(new FileWriter(file)); // default buffer size 8192
                out.write(fileContents);
-               out.close();
                result = true;
             }
          }
       } catch (IOException e) {
-         Log.e(Constants.LOG_TAG, "Error writing string data to file " + e.getMessage(), e);
+         Log.e(AllSnowApplication.TAG, "Error writing string data to file " + e.getMessage(), e);
+      } finally {
+         if (out != null) {
+            try {
+               out.close();
+            } catch (IOException e) {
+               // ignore
+            }
+         }
       }
       return result;
    }
 
    /**
-    * Append String to end of File, return true on success, false on failure.
-    * 
-    * @param appendContents
-    * @param file
-    * @return
-    */
-   public static boolean appendStringToFile(final String appendContents, final File file) {
-      boolean result = false;
-      try {
-         synchronized (FileUtil.DATA_LOCK) {
-            if ((file != null) && file.canWrite()) {
-               file.createNewFile(); // ok if returns false, overwrite
-               Writer out = new BufferedWriter(new FileWriter(file, true), 1024);
-               out.write(appendContents);
-               out.close();
-               result = true;
-            }
-         }
-      } catch (IOException e) {
-         Log.e(Constants.LOG_TAG, "Error appending string data to file " + e.getMessage(), e);
-      }
-      return result;
-   }
-
-   /**
-    * Read file as String, return null if file is not present or not readable.
+    * Read file to a String.
     * 
     * @param file
     * @return
     */
    public static String readFileAsString(final File file) {
-      StringBuilder sb = null;
+      String result = null;
+      FileInputStream stream = null;
       try {
          synchronized (FileUtil.DATA_LOCK) {
-            if ((file != null) && file.canRead()) {
-               sb = new StringBuilder();
-               String line = null;
-               BufferedReader in = new BufferedReader(new FileReader(file), 1024);
-               while ((line = in.readLine()) != null) {
-                  sb.append(line + System.getProperty("line.separator"));
-               }
-               in.close();
-            }
+            stream = new FileInputStream(file);
+            FileChannel fc = stream.getChannel();
+            MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
+            // NOTE: default charset
+            result = Charset.defaultCharset().decode(bb).toString();
          }
       } catch (IOException e) {
-         Log.e(Constants.LOG_TAG, "Error reading file " + e.getMessage(), e);
+         Log.e(AllSnowApplication.TAG, "Error reading file " + e.getMessage(), e);
+      } finally {
+         try {
+            stream.close();
+         } catch (IOException e) {
+            // ignore
+         }
       }
-      if (sb != null) {
-         return sb.toString();
-      }
-      return null;
+      return result;
    }
+   
 }
