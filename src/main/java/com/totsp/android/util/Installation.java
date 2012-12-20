@@ -9,7 +9,7 @@ import java.util.UUID;
 import android.content.Context;
 
 public class Installation {
-   
+
    private static String sID;
    private static final String INSTALLATION = "INSTALLATION";
 

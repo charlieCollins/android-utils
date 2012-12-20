@@ -84,9 +84,9 @@ public class Screen {
    private final Context ctx;
 
    public Screen(final Context ctx) {
-      
+
       this.ctx = ctx;
-      
+
       WindowManager wm = ((WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE));
       mDisplay = wm.getDefaultDisplay();
       mConfig = ctx.getResources().getConfiguration();
@@ -202,9 +202,9 @@ public class Screen {
             return "normal";
          case Configuration.SCREENLAYOUT_SIZE_LARGE:
             return "large";
-         // xlarge only for api level 10 and up
-         //case Configuration.SCREENLAYOUT_SIZE_XLARGE:
-         //   return "xlarge";
+            // xlarge only for api level 10 and up
+            //case Configuration.SCREENLAYOUT_SIZE_XLARGE:
+            //   return "xlarge";
          case Configuration.SCREENLAYOUT_SIZE_UNDEFINED:
             return "UNDEFINED";
       }
@@ -272,8 +272,8 @@ public class Screen {
     */
    public String densityDpiText() {
       switch (densityDpi) {
-         //case DisplayMetrics.DENSITY_TV:
-         //   return "tvdpi";
+      //case DisplayMetrics.DENSITY_TV:
+      //   return "tvdpi";
          case DisplayMetrics.DENSITY_LOW:
             return "ldpi";
          case DisplayMetrics.DENSITY_MEDIUM:
@@ -281,8 +281,8 @@ public class Screen {
          case DisplayMetrics.DENSITY_HIGH:
             return "hdpi";
             // xhigh only for api 10 and up
-         //case DisplayMetrics.DENSITY_XHIGH:
-         //   return "xhdpi";
+            //case DisplayMetrics.DENSITY_XHIGH:
+            //   return "xhdpi";
       }
 
       return "UNKNOWN";
@@ -430,8 +430,8 @@ public class Screen {
       switch (pixelFormat) {
          case PixelFormat.A_8:
             return "A_8";
-         //case ImageFormat.JPEG:
-         //   return "JPEG";
+            //case ImageFormat.JPEG:
+            //   return "JPEG";
          case PixelFormat.L_8:
             return "L_8";
          case PixelFormat.LA_88:
@@ -458,12 +458,12 @@ public class Screen {
             return "TRANSPARENT";
          case PixelFormat.UNKNOWN:
             return "UNKNOWN";
-         //case ImageFormat.NV21:
-         //   return "NV21";
-         //case ImageFormat.YUY2:
-         //   return "YUY2";
-         //case ImageFormat.NV16:
-         //   return "NV16";
+            //case ImageFormat.NV21:
+            //   return "NV21";
+            //case ImageFormat.YUY2:
+            //   return "YUY2";
+            //case ImageFormat.NV16:
+            //   return "NV16";
          default:
             return "UNKNOWN";
       }

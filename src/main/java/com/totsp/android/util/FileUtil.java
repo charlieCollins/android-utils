@@ -1,18 +1,18 @@
 package com.totsp.android.util;
 
-import java.io.BufferedReader;
+import android.os.Environment;
+import android.util.Log;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-
-import android.os.Environment;
-import android.util.Log;
+import java.nio.charset.Charset;
 
 /**
  * FileUtil methods. 
@@ -90,13 +90,14 @@ public final class FileUtil {
       }
       return dir;
    }
-/**
-    * Copy file, return true on success, false on failure.
-    * 
-    * @param src
-    * @param dst
-    * @return
-    */
+
+   /**
+       * Copy file, return true on success, false on failure.
+       * 
+       * @param src
+       * @param dst
+       * @return
+       */
    public static boolean copyFile(final File src, final File dst) {
       boolean result = false;
       FileChannel inChannel = null;
@@ -108,7 +109,7 @@ public final class FileUtil {
             inChannel.transferTo(0, inChannel.size(), outChannel);
             result = true;
          } catch (IOException e) {
-            Log.e(AllSnowApplication.TAG, "Error creating channels:" + e.getMessage(), e);
+            Log.e(Constants.LOG_TAG, "Error creating channels:" + e.getMessage(), e);
          } finally {
             if ((inChannel != null) && inChannel.isOpen()) {
                try {
@@ -149,7 +150,7 @@ public final class FileUtil {
             }
          }
       } catch (IOException e) {
-         Log.e(AllSnowApplication.TAG, "Error writing string data to file " + e.getMessage(), e);
+         Log.e(Constants.LOG_TAG, "Error writing string data to file " + e.getMessage(), e);
       } finally {
          if (out != null) {
             try {
@@ -180,7 +181,7 @@ public final class FileUtil {
             result = Charset.defaultCharset().decode(bb).toString();
          }
       } catch (IOException e) {
-         Log.e(AllSnowApplication.TAG, "Error reading file " + e.getMessage(), e);
+         Log.e(Constants.LOG_TAG, "Error reading file " + e.getMessage(), e);
       } finally {
          try {
             stream.close();
@@ -190,5 +191,5 @@ public final class FileUtil {
       }
       return result;
    }
-   
+
 }
